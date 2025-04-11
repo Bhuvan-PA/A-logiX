@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { Switch } from "@/components/ui/switch";
 import { 
   Accordion, 
   AccordionContent, 
@@ -48,10 +49,11 @@ import {
   MessageSquare,
   Upload,
   ArrowUpCircle,
-  Check,
-  X,
+  Edit,
   PieChart,
-  TrendingUp
+  TrendingUp,
+  Check,
+  X
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 
@@ -96,6 +98,10 @@ export default function Dashboard() {
   const [lifestyleLogs, setLifestyleLogs] = useState<LifestyleLog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // Food tracking state
+  const [fastingTime, setFastingTime] = useState<string>("16:8");
+  const [fastingEnabled, setFastingEnabled] = useState<boolean>(false);
   
   // Date filtering
   const today = new Date();
@@ -583,13 +589,530 @@ export default function Dashboard() {
             </div>
           </div>
           
+          {/* What Would You Like to Track Section */}
+          <Card className="mb-6">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">What Would You Like to Track?</CardTitle>
+              <CardDescription>
+                Select a category to track and manage your health data
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                <Button 
+                  variant="outline" 
+                  className="flex flex-col items-center h-auto py-4 px-2"
+                  onClick={() => setActiveTab("food")}
+                >
+                  <Utensils className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-sm font-medium">Food</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="flex flex-col items-center h-auto py-4 px-2"
+                  onClick={() => setActiveTab("workout")}
+                >
+                  <Dumbbell className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-sm font-medium">Workout</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="flex flex-col items-center h-auto py-4 px-2"
+                  onClick={() => setActiveTab("weight")}
+                >
+                  <Weight className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-sm font-medium">Weight</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="flex flex-col items-center h-auto py-4 px-2"
+                  onClick={() => setActiveTab("water")}
+                >
+                  <Droplets className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-sm font-medium">Water</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="flex flex-col items-center h-auto py-4 px-2"
+                  onClick={() => setActiveTab("steps")}
+                >
+                  <Footprints className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-sm font-medium">Steps</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="flex flex-col items-center h-auto py-4 px-2"
+                  onClick={() => setActiveTab("sleep")}
+                >
+                  <MoonStar className="h-8 w-8 mb-2 text-primary" />
+                  <span className="text-sm font-medium">Sleep</span>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          
+          {/* Food Tracking Page */}
+          {activeTab === "food" && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold flex items-center">
+                  <Utensils className="mr-2 h-5 w-5 text-primary" />
+                  Food Tracking
+                </h2>
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setActiveTab("overview")}
+                >
+                  Back to Dashboard
+                </Button>
+              </div>
+              
+              {/* Intermittent Fasting Setup */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Set Up Intermittent Fasting</CardTitle>
+                  <CardDescription>
+                    Track your fasting periods for better health benefits
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <p className="text-sm text-muted-foreground">
+                        Intermittent fasting can help with weight management and metabolic health. 
+                        We recommend the {fastingTime} plan for your goals.
+                      </p>
+                      
+                      <div className="space-y-2">
+                        <Label>Fasting Schedule</Label>
+                        <Select 
+                          value={fastingTime} 
+                          onValueChange={setFastingTime}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a fasting schedule" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="16:8">16:8 (16h fast, 8h eating window)</SelectItem>
+                            <SelectItem value="14:10">14:10 (14h fast, 10h eating window)</SelectItem>
+                            <SelectItem value="18:6">18:6 (18h fast, 6h eating window)</SelectItem>
+                            <SelectItem value="20:4">20:4 (20h fast, 4h eating window)</SelectItem>
+                            <SelectItem value="OMAD">One Meal A Day</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <Switch 
+                          id="enable-fasting" 
+                          checked={fastingEnabled}
+                          onCheckedChange={setFastingEnabled}
+                        />
+                        <Label htmlFor="enable-fasting">Enable fasting tracker</Label>
+                      </div>
+                      
+                      <Button disabled={!fastingEnabled}>
+                        Get Started
+                      </Button>
+                    </div>
+                    
+                    <div className="bg-primary/5 rounded-lg p-4 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="inline-flex rounded-full bg-primary/10 p-6 mb-4">
+                          <Clock className="h-12 w-12 text-primary" />
+                        </div>
+                        <h3 className="text-lg font-medium mb-2">Fasting Benefits</h3>
+                        <ul className="text-sm text-muted-foreground space-y-1 text-left">
+                          <li>• Improved weight management</li>
+                          <li>• Better insulin sensitivity</li>
+                          <li>• Reduced inflammation</li>
+                          <li>• Enhanced cellular repair</li>
+                          <li>• Improved brain health</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Calorie Tracker */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Calorie Tracker</CardTitle>
+                  <CardDescription>
+                    Monitor your daily calorie intake and macronutrients
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col md:flex-row gap-6">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="inline-flex rounded-full bg-primary/10 p-4">
+                          <Utensils className="h-10 w-10 text-primary" />
+                        </div>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-center mb-4">
+                        You've eaten {nutrients.calories} calories today
+                      </h3>
+                      
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span>Daily goal: {calorieGoal} calories</span>
+                          <span>{calorieProgress}%</span>
+                        </div>
+                        <Progress value={calorieProgress} className="h-2" />
+                      </div>
+                      
+                      <div className="grid grid-cols-3 gap-2 mt-6">
+                        <div className="bg-primary/5 p-3 rounded-lg text-center">
+                          <h4 className="text-xs text-muted-foreground mb-1">Protein</h4>
+                          <p className="font-bold">{nutrients.protein}g</p>
+                        </div>
+                        <div className="bg-primary/5 p-3 rounded-lg text-center">
+                          <h4 className="text-xs text-muted-foreground mb-1">Carbs</h4>
+                          <p className="font-bold">{nutrients.carbs}g</p>
+                        </div>
+                        <div className="bg-primary/5 p-3 rounded-lg text-center">
+                          <h4 className="text-xs text-muted-foreground mb-1">Fat</h4>
+                          <p className="font-bold">{nutrients.fat}g</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1">
+                      <Tabs defaultValue="insights" className="w-full">
+                        <TabsList className="grid w-full grid-cols-3">
+                          <TabsTrigger value="insights">Insights</TabsTrigger>
+                          <TabsTrigger value="recipes">Recipes</TabsTrigger>
+                          <TabsTrigger value="gallery">Snap Gallery</TabsTrigger>
+                        </TabsList>
+                        
+                        <TabsContent value="insights" className="space-y-4 mt-4">
+                          <div className="bg-primary/5 p-4 rounded-lg">
+                            <h4 className="font-medium mb-2">Nutrition Breakdown</h4>
+                            <div className="space-y-2">
+                              <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                  <span>Protein ({Math.round((nutrients.protein * 4 / (nutrients.calories || 1)) * 100)}%)</span>
+                                  <span>{nutrients.protein * 4} cal</span>
+                                </div>
+                                <Progress value={Math.round((nutrients.protein * 4 / (nutrients.calories || 1)) * 100)} className="h-1" />
+                              </div>
+                              <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                  <span>Carbs ({Math.round((nutrients.carbs * 4 / (nutrients.calories || 1)) * 100)}%)</span>
+                                  <span>{nutrients.carbs * 4} cal</span>
+                                </div>
+                                <Progress value={Math.round((nutrients.carbs * 4 / (nutrients.calories || 1)) * 100)} className="h-1" />
+                              </div>
+                              <div>
+                                <div className="flex justify-between text-sm mb-1">
+                                  <span>Fat ({Math.round((nutrients.fat * 9 / (nutrients.calories || 1)) * 100)}%)</span>
+                                  <span>{nutrients.fat * 9} cal</span>
+                                </div>
+                                <Progress value={Math.round((nutrients.fat * 9 / (nutrients.calories || 1)) * 100)} className="h-1" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-primary/5 p-4 rounded-lg">
+                            <h4 className="font-medium mb-2">Nutrition Tips</h4>
+                            <p className="text-sm text-muted-foreground">
+                              Based on your entries, try to increase your protein intake and reduce simple carbohydrates for better energy levels throughout the day.
+                            </p>
+                          </div>
+                        </TabsContent>
+                        
+                        <TabsContent value="recipes" className="mt-4">
+                          <div className="text-center py-4">
+                            <p className="text-muted-foreground">
+                              Quick healthy meal ideas will appear here based on your preferences and goals.
+                            </p>
+                            <Button variant="outline" className="mt-4">
+                              Explore Recipes
+                            </Button>
+                          </div>
+                        </TabsContent>
+                        
+                        <TabsContent value="gallery" className="mt-4">
+                          <div className="text-center py-4">
+                            <p className="text-muted-foreground">
+                              Your meal photos will be displayed here to help you track your eating habits visually.
+                            </p>
+                            <Button variant="outline" className="mt-4">
+                              View All Photos
+                            </Button>
+                          </div>
+                        </TabsContent>
+                      </Tabs>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Meal Log */}
+              <Card>
+                <CardHeader>
+                  <div className="flex justify-between items-center">
+                    <CardTitle className="text-lg">Meal Log</CardTitle>
+                    <Button onClick={() => setMealFormOpen(true)}>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Meal
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    {/* Breakfast */}
+                    <div className="rounded-lg border p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 rounded-full bg-yellow-500 mr-2"></div>
+                          <h3 className="font-medium">Breakfast</h3>
+                        </div>
+                        <div className="text-sm font-medium">
+                          {foodLogs.filter(log => log.mealType === "breakfast").reduce((sum, log) => sum + (log.calories || 0), 0)} calories
+                        </div>
+                      </div>
+                      
+                      {foodLogs.filter(log => log.mealType === "breakfast").length > 0 ? (
+                        <div className="space-y-3">
+                          {foodLogs.filter(log => log.mealType === "breakfast").map(log => (
+                            <div key={log.id} className="flex justify-between text-sm border-b pb-2">
+                              <span>{log.foodName}</span>
+                              <span>{log.calories} cal</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-2">
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => {
+                              setMealForm({...mealForm, mealType: "breakfast"});
+                              setMealFormOpen(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Breakfast
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Morning Snack */}
+                    <div className="rounded-lg border p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 rounded-full bg-orange-500 mr-2"></div>
+                          <h3 className="font-medium">Morning Snack</h3>
+                        </div>
+                        <div className="text-sm font-medium">
+                          {foodLogs.filter(log => log.mealType === "morning-snack").reduce((sum, log) => sum + (log.calories || 0), 0)} calories
+                        </div>
+                      </div>
+                      
+                      {foodLogs.filter(log => log.mealType === "morning-snack").length > 0 ? (
+                        <div className="space-y-3">
+                          {foodLogs.filter(log => log.mealType === "morning-snack").map(log => (
+                            <div key={log.id} className="flex justify-between text-sm border-b pb-2">
+                              <span>{log.foodName}</span>
+                              <span>{log.calories} cal</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-2">
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => {
+                              setMealForm({...mealForm, mealType: "morning-snack"});
+                              setMealFormOpen(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Snack
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Lunch */}
+                    <div className="rounded-lg border p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                          <h3 className="font-medium">Lunch</h3>
+                        </div>
+                        <div className="text-sm font-medium">
+                          {foodLogs.filter(log => log.mealType === "lunch").reduce((sum, log) => sum + (log.calories || 0), 0)} calories
+                        </div>
+                      </div>
+                      
+                      {foodLogs.filter(log => log.mealType === "lunch").length > 0 ? (
+                        <div className="space-y-3">
+                          {foodLogs.filter(log => log.mealType === "lunch").map(log => (
+                            <div key={log.id} className="flex justify-between text-sm border-b pb-2">
+                              <span>{log.foodName}</span>
+                              <span>{log.calories} cal</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-2">
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => {
+                              setMealForm({...mealForm, mealType: "lunch"});
+                              setMealFormOpen(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Lunch
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Evening Snack */}
+                    <div className="rounded-lg border p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 rounded-full bg-orange-500 mr-2"></div>
+                          <h3 className="font-medium">Evening Snack</h3>
+                        </div>
+                        <div className="text-sm font-medium">
+                          {foodLogs.filter(log => log.mealType === "evening-snack").reduce((sum, log) => sum + (log.calories || 0), 0)} calories
+                        </div>
+                      </div>
+                      
+                      {foodLogs.filter(log => log.mealType === "evening-snack").length > 0 ? (
+                        <div className="space-y-3">
+                          {foodLogs.filter(log => log.mealType === "evening-snack").map(log => (
+                            <div key={log.id} className="flex justify-between text-sm border-b pb-2">
+                              <span>{log.foodName}</span>
+                              <span>{log.calories} cal</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-2">
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => {
+                              setMealForm({...mealForm, mealType: "evening-snack"});
+                              setMealFormOpen(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Snack
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Dinner */}
+                    <div className="rounded-lg border p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 rounded-full bg-indigo-500 mr-2"></div>
+                          <h3 className="font-medium">Dinner</h3>
+                        </div>
+                        <div className="text-sm font-medium">
+                          {foodLogs.filter(log => log.mealType === "dinner").reduce((sum, log) => sum + (log.calories || 0), 0)} calories
+                        </div>
+                      </div>
+                      
+                      {foodLogs.filter(log => log.mealType === "dinner").length > 0 ? (
+                        <div className="space-y-3">
+                          {foodLogs.filter(log => log.mealType === "dinner").map(log => (
+                            <div key={log.id} className="flex justify-between text-sm border-b pb-2">
+                              <span>{log.foodName}</span>
+                              <span>{log.calories} cal</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-2">
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => {
+                              setMealForm({...mealForm, mealType: "dinner"});
+                              setMealFormOpen(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Dinner
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* More Options Menu */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">More Options</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                    <Button variant="outline" className="h-auto flex flex-col items-center py-4 px-2">
+                      <BarChart className="h-6 w-6 mb-2 text-primary" />
+                      <span className="text-xs">Calories & Nutrition Settings</span>
+                    </Button>
+                    
+                    <Button variant="outline" className="h-auto flex flex-col items-center py-4 px-2">
+                      <Plus className="h-6 w-6 mb-2 text-primary" />
+                      <span className="text-xs">Add/Remove Meal & Time</span>
+                    </Button>
+                    
+                    <Button variant="outline" className="h-auto flex flex-col items-center py-4 px-2">
+                      <Edit className="h-6 w-6 mb-2 text-primary" />
+                      <span className="text-xs">Edit Meal Calories</span>
+                    </Button>
+                    
+                    <Button variant="outline" className="h-auto flex flex-col items-center py-4 px-2">
+                      <Camera className="h-6 w-6 mb-2 text-primary" />
+                      <span className="text-xs">Snap Gallery</span>
+                    </Button>
+                    
+                    <Button variant="outline" className="h-auto flex flex-col items-center py-4 px-2">
+                      <Clock className="h-6 w-6 mb-2 text-primary" />
+                      <span className="text-xs">Food Reminders</span>
+                    </Button>
+                    
+                    <Button variant="outline" className="h-auto flex flex-col items-center py-4 px-2">
+                      <MessageSquare className="h-6 w-6 mb-2 text-primary" />
+                      <span className="text-xs">Share Feedback</span>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          
           {/* Dashboard Tabs */}
-          <Tabs defaultValue="overview" className="mb-6" onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
-              <TabsTrigger value="lifestyle">Lifestyle</TabsTrigger>
-            </TabsList>
+          {(activeTab === "overview" || activeTab === "nutrition" || activeTab === "lifestyle") && (
+            <Tabs defaultValue={activeTab} className="mb-6" onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
+                <TabsTrigger value="lifestyle">Lifestyle</TabsTrigger>
+              </TabsList>
             
             {/* Overview Tab */}
             <TabsContent value="overview" className="space-y-4">
@@ -1020,6 +1543,7 @@ export default function Dashboard() {
               </div>
             </TabsContent>
           </Tabs>
+          )}
         </div>
       </main>
       

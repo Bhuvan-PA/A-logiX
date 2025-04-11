@@ -1,0 +1,170 @@
+🔘 Add: “What Would You Like to Track?” Section (Main Menu)
+Location: Top of the dashboard
+Style: Horizontal or grid-style menu buttons with icons
+Options:
+
+🥗 Food
+
+🏋️ Workout
+
+⚖️ Weight
+
+💧 Water
+
+🚶 Steps
+
+😴 Sleep
+
+On clicking any option, dynamically render that tracker page within the dashboard (use routing or conditional rendering).
+
+🍽 Food Tracking Page (After Clicking “Food”)
+1. Intermittent Fasting Setup
+Title: “Set Up Intermittent Fasting”
+
+Show a recommended plan in hours (e.g., 16:8, 14:10)
+
+Button: “Get Started” → Navigate to fasting timer/tracker page
+
+2. Calorie Tracker
+Animated fork and spoon illustration
+
+Display: “You’ve eaten X calories today”
+
+Tabs/Buttons:
+
+Insights (calorie & macro graphs)
+
+Recipes (quick meals with macro info)
+
+Snap Gallery (images of logged meals)
+
+3. Meal Log with Calorie Counts
+Each meal block should show calorie totals and offer an "Add" option:
+
+🍳 Breakfast
+
+Total calories: [X]
+
+Button: Add Breakfast
+
+🥜 Morning Snack
+
+Calories: [X]
+
+Button: Add Snack
+
+🍛 Lunch
+
+Calories: [X]
+
+Button: Add Lunch
+
+🍎 Evening Snack
+
+Calories: [X]
+
+Button: Add Snack
+
+🍲 Dinner
+
+Calories: [X]
+
+Button: Add Dinner
+
+4. More Options Menu (Tile or List View)
+Title: More
+
+📊 Calories & Nutrition Settings
+
+➕ Add/Remove Meal & Time
+
+✏️ Edit Meal Calories
+
+📷 Snap Gallery
+
+🔔 Food Reminders
+
+📝 Share Feedback
+
+Each item should redirect to respective pages using in-app routing.
+
+5. Floating Action Button (FAB)
+Upload meal snap
+
+On upload: run ML model and extract:
+
+🍽 Calories
+
+🥩 Proteins
+
+🧈 Fats
+
+🍞 Carbohydrates
+
+🏋️ Workout Page
+Slider Tabs: Workouts | Analysis
+
+➤ Workouts Tab
+Title: Your Workouts
+
+Section: Create Your Personal Routine
+
+Add workouts manually or select templates
+
+Section: Track Your Activity
+
+Log sets, reps, time, etc.
+
+➤ Analysis Tab
+View workout data
+
+Toggle: Daily | Weekly View
+
+Graphs showing:
+
+Activity duration
+
+Calories burned
+
+Muscle groups targeted (optional)
+
+⚖️ Weight Tracker Page
+Title: Weight Tracker
+
+Header: “X days left to reach goal weight”
+
+Show line chart of:
+
+X-axis: Date
+
+Y-axis: Weight (kg or lbs)
+
+Below chart: Timeline log (editable)
+
+Option to set/update weight goal
+
+💧 Water Tracker Page
+Show: “You've drunk X/8 glasses today” (visually fill glasses)
+
+Show: “Reminder set for every 2 hours” (toggle option)
+
+Display volume unit (ml by default)
+
+Section: Today’s Tips
+
+Remaining liters to drink: X L
+
+Small health hydration tip
+
+Bottom: Water Intake Graph (by hour)
+
+⚙️ Tech & UX Tips
+Use component-based rendering (React preferred)
+
+Use animations for transitions and interactions
+
+Use charts (Recharts, Chart.js) for analysis views
+
+Add toast/snackbar feedback for actions like "Meal Added!"
+
+Ensure mobile responsiveness
