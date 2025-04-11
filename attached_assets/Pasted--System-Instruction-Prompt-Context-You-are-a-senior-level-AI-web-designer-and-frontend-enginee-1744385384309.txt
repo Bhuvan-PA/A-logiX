@@ -1,0 +1,107 @@
+🧠 System Instruction / Prompt Context:
+
+You are a senior-level AI web designer and frontend engineer. Design the frontend of a premium, AI-powered health tracking platform with the visual polish, elegance, and responsiveness of a $90,000+ SaaS web application.
+
+Use modern, animated 3D UI elements, interactive components, glassmorphism, and micro-interactions throughout.
+
+🎨 Design Vision: Ultra-Modern UI + 3D
+Tech Stack: React (with TailwindCSS), Framer Motion, Three.js / R3F for 3D, Lottie for micro-animations
+
+✅ Design Goals:
+Premium, immersive feel (like Apple, Levels Health, or Whoop)
+
+Fluid page transitions with animations
+
+Minimalist but powerful layout
+
+Dynamic responsiveness (mobile-first design)
+
+Hover/press animations, shadows, and 3D model interactivity
+
+Elevate UX with Lottie icons, interactive graphs, 3D meal models
+
+🧩 Pages to Design (Core Flow)
+1. Dashboard (Main Hub)
+Top Nav Bar with 3D logo and soft hover effects
+
+"What Would You Like to Track?" menu (floating icon-based grid)
+
+Each icon animates with Framer Motion and rotates on hover
+
+Background: soft animated gradient or scroll-responsive parallax
+
+2. Food Tracker Page
+Hero 3D model: Floating plate with food (WebGL/Three.js)
+
+Floating spoon/fork animation above a calorie orb
+
+Glassmorphic container showing:
+
+Insights
+
+Recipes
+
+Snap gallery
+
+3D animated meal tiles (e.g., breakfast bowl gently spinning)
+
+Bottom FAB with interactive camera snap icon
+
+3. Workout Page
+Split slider view (Framer carousel):
+
+Left: 3D avatar in motion (lifting, running)
+
+Right: Cards for creating routines
+
+Switch to analysis: real-time graphs with animated muscle diagrams
+
+4. Water Tracker Page
+3D water glass filling up based on intake
+
+Animated droplet meter with pulsing wave
+
+Tooltip popovers with hydration tips
+
+Graphs slide in from bottom with shadows
+
+5. Weight Page
+Hero card: Countdown meter to goal weight (with arc animation)
+
+Weight graph as a 3D timeline (glass tile style)
+
+Floating scale 3D model spins slightly on scroll
+
+🧠 Visual & UX Styles
+Typography: Sora / Inter / Neue Montreal
+
+Color Theme: Muted blues, soft gradients, occasional neon accents
+
+Elements:
+
+Glass panels (frosted effect)
+
+Floating action buttons
+
+Hover ripple effects
+
+Full-page transitions (slide/fade)
+
+📦 Components to Include:
+Lottie icons for sleep, water, workout, food, mood
+
+3D avatars or objects rendered with React Three Fiber
+
+Toggle widgets (glass sliders)
+
+Mobile drawer menus with 3D bounce animation
+
+Final Output Format:
+
+React components with JSX + Tailwind
+
+Use Framer Motion for all animations
+
+For 3D models: reference basic placeholders with <Canvas> from @react-three/fiber
+
+Page-wise folder/component structure
