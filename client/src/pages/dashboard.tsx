@@ -1482,15 +1482,32 @@ export default function Dashboard() {
                       {["weight", "workout", "steps", "sleep", "water", "medicine", "food", "mood"].map(tracker => (
                         <div 
                           key={tracker}
-                          className="border rounded-lg p-3 hover:border-primary cursor-pointer transition-colors"
-                          onClick={() => setActiveTracker(tracker)}
+                          className="border rounded-lg p-3 hover:border-primary cursor-pointer transition-colors group relative"
+                          onClick={() => tracker === "water" || tracker === "workout" 
+                            ? null 
+                            : setActiveTracker(tracker)
+                          }
                         >
+                          {/* Enhanced tracker card with 3D-like hover effect */}
                           <div className="flex items-center mb-2">
-                            <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mr-2">
+                            <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mr-2 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
                               {getTrackerIcon(tracker)}
                             </div>
                             <span className="text-sm font-medium capitalize">{tracker}</span>
+                            
+                            {(tracker === "water" || tracker === "workout") && (
+                              <span className="ml-auto text-xs text-primary/70 font-medium">Premium</span>
+                            )}
                           </div>
+                          
+                          {/* Conditionally render links for enhanced trackers */}
+                          {(tracker === "water" || tracker === "workout") && (
+                            <Link 
+                              to={`/${tracker}-tracker`}
+                              className="absolute inset-0 z-10"
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                          )}
                           
                           {lifestyleLogs.find(log => log.type === tracker) ? (
                             <div className="text-sm">

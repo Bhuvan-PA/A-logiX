@@ -14,6 +14,8 @@ import ConditionsPage from "@/pages/onboarding/conditions";
 import SummaryPage from "@/pages/onboarding/summary";
 import Dashboard from "@/pages/dashboard";
 import ProfilePage from "@/pages/profile-page";
+import WaterTrackerPage from "@/pages/water-tracker";
+import WorkoutTrackerPage from "@/pages/workout-tracker";
 
 function Router() {
   return (
@@ -28,6 +30,8 @@ function Router() {
       <Route path="/onboarding/summary" component={() => <OnboardingLayout><SummaryPage /></OnboardingLayout>} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/profile" component={ProfilePage} />
+      <Route path="/water-tracker" component={WaterTrackerPage} />
+      <Route path="/workout-tracker" component={WorkoutTrackerPage} />
       <Route component={NotFound} />
     </Switch>
   );
