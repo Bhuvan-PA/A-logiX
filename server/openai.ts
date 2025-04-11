@@ -47,8 +47,12 @@ export async function generateNutritionInsight({
       max_tokens: 500
     });
 
-    return response.choices[0].message.content || 
-      "We couldn't generate a personalized insight at this moment. Please try again later.";
+    const content = response.choices[0].message.content;
+    if (content === null || content === undefined) {
+      return "We couldn't generate a personalized insight at this moment. Please try again later.";
+    }
+    
+    return content;
   } catch (error) {
     console.error("Error generating OpenAI insight:", error);
     return "We're experiencing issues with our AI service. Please try again later.";
@@ -104,7 +108,14 @@ export async function analyzeMeal(mealData: {
       temperature: 0.7,
     });
 
-    const result = JSON.parse(response.choices[0].message.content);
+    const content = response.choices[0].message.content;
+    if (content === null || content === undefined) {
+      return {
+        suggestions: "We couldn't analyze this meal at the moment. Please try again later."
+      };
+    }
+    
+    const result = JSON.parse(content);
     return {
       nutritionEstimate: result.nutritionEstimate,
       suggestions: result.suggestions
@@ -175,7 +186,12 @@ export async function generateMealPlan({
       temperature: 0.7,
     });
 
-    return JSON.parse(response.choices[0].message.content);
+    const content = response.choices[0].message.content;
+    if (content === null || content === undefined) {
+      return { dailyPlans: [], groceryList: [] };
+    }
+    
+    return JSON.parse(content);
   } catch (error) {
     console.error("Error generating meal plan with OpenAI:", error);
     throw new Error("Failed to generate meal plan. Please try again later.");
