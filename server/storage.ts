@@ -8,6 +8,7 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(userId: number, userData: Partial<User>): Promise<User>;
   updateUserOnboarding(userId: number, onboarding: UserOnboarding): Promise<User>;
   
   // Nutrition plan methods
@@ -63,10 +64,32 @@ export class MemStorage implements IStorage {
       languages: [],
       activity: null,
       goals: [],
-      conditions: []
+      conditions: [],
+      dietaryPreferences: [],
+      profilePicture: null,
+      firstName: insertUser.firstName || null,
+      lastName: insertUser.lastName || null
     };
     this.users.set(id, user);
     return user;
+  }
+
+  async updateUser(userId: number, userData: Partial<User>): Promise<User> {
+    const user = await this.getUser(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Don't update password directly through this method
+    const { password, ...dataToUpdate } = userData;
+    
+    const updatedUser: User = {
+      ...user,
+      ...dataToUpdate
+    };
+
+    this.users.set(userId, updatedUser);
+    return updatedUser;
   }
 
   async updateUserOnboarding(userId: number, onboarding: UserOnboarding): Promise<User> {
@@ -92,7 +115,12 @@ export class MemStorage implements IStorage {
 
   async createNutritionPlan(insertPlan: InsertNutritionPlan): Promise<NutritionPlan> {
     const id = this.planIdCounter++;
-    const plan: NutritionPlan = { ...insertPlan, id };
+    const plan: NutritionPlan = { 
+      ...insertPlan, 
+      id,
+      focusFoods: insertPlan.focusFoods || [],
+      aiInsight: insertPlan.aiInsight || null
+    };
     this.nutritionPlans.set(id, plan);
     return plan;
   }

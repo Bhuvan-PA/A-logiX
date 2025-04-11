@@ -16,6 +16,8 @@ export const users = pgTable("users", {
   activity: text("activity"),
   goals: text("goals").array(),
   conditions: text("conditions").array(),
+  dietaryPreferences: text("dietary_preferences").array(),
+  profilePicture: text("profile_picture"),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -34,6 +36,8 @@ export const userOnboardingSchema = z.object({
   languages: z.array(z.string()),
   gender: z.string(),
   conditions: z.array(z.string()),
+  dietaryPreferences: z.array(z.string()).optional(),
+  profilePicture: z.string().optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

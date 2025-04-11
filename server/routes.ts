@@ -184,6 +184,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to retrieve user data" });
     }
   });
+  
+  // Update user profile
+  app.patch("/api/user/:id", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Update user profile with provided data
+      const updatedUser = await storage.updateUser(userId, req.body);
+      
+      // Return user without password
+      const { password, ...userWithoutPassword } = updatedUser;
+      res.status(200).json(userWithoutPassword);
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      res.status(500).json({ message: "Failed to update user profile" });
+    }
+  });
 
   // Generate AI nutrition insight
   app.post("/api/ai/nutrition-insight", async (req, res) => {
