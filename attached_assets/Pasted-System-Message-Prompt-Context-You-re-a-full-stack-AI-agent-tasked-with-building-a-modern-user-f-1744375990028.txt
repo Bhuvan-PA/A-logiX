@@ -1,0 +1,167 @@
+System Message / Prompt Context:
+
+You're a full-stack AI agent tasked with building a modern, user-friendly health and nutrition tracking website. Use the Gemini API to generate all required components (HTML, React components, REST APIs, backend structure) for a full-stack application with both client-side and server-side logic. This platform helps users register, track their diet, analyze their lifestyle, and receive personalized health plans.
+
+🛠 Requirements:
+
+💡 General Purpose
+Create a personal health and nutrition coaching platform with features including:
+
+Diet planning
+
+AI meal analysis
+
+Lifestyle analysis
+
+Calorie tracking
+
+Support for conditions (diabetes, PCOS, etc.)
+
+CGM (Pro version)
+
+🔐 1. Registration & Login Page
+Full user registration with email, name, age, gender, and password
+
+Optional Google OAuth
+
+Redirect to onboarding flow after registration
+
+📘 2. What Are You Looking For? (Page 1)
+Heading: What are you looking for?
+
+Sub-options (each with icons):
+
+Coach Guidance
+
+SNAP (Smart Nutrition AI Plan)
+
+Diet Plan
+
+Weight Loss
+
+Intermittent Fasting
+
+Calorie Tracker
+
+Muscle Gain
+
+Workouts and Yoga
+
+Healthy Foods
+
+CGM (Pro feature)
+
+Allow users to select multiple options.
+
+🏃‍♂️ 3. How Active Are You? (Page 2)
+Heading: How active are you?
+
+Subheading: Based on your lifestyle, we can assess your daily calorie requirements
+
+Options:
+
+Mostly Sitting (e.g., desk job)
+
+Often Standing (e.g., retail)
+
+Regularly Walking (e.g., fieldwork)
+
+Physically Intense Work (e.g., labor)
+
+Each option should include an icon and short description.
+
+🎂 4. What's Your Age? (Page 3)
+Heading: What’s your age?
+
+Subheading: Your age determines how much you should consume
+
+Input: Age in years (slider or dropdown)
+
+🌍 5. Where Are You From? (Page 4)
+Heading: Where are you from?
+
+Subheading: Which language do you prefer to speak in?
+
+Fields:
+
+Country (Dropdown)
+
+Language Preference (Dropdown / Multiselect)
+
+🚻 6. What’s Your Biological Sex? (Page 5)
+Heading: What’s your biological sex?
+
+Options:
+
+Male
+
+Female
+
+Prefer not to say
+
+Other
+
+🏥 7. Any Medical Conditions We Should Be Aware Of? (Page 6)
+Heading: Any medical condition we should be aware of?
+
+Options (Multi-select with tooltips):
+
+None
+
+Diabetes
+
+Pre-diabetes
+
+Cholesterol
+
+Hypertension
+
+PCOS
+
+Thyroid
+
+Physical Injury
+
+Excessive Stress/Anxiety
+
+Sleep Issues
+
+Depression
+
+Anger Issues
+
+Loneliness
+
+Relationship Stress
+
+🧠 Bonus Features to Include
+GPT meal summary & health advice card after onboarding
+
+Profile dashboard that shows:
+
+Daily calorie goals
+
+Recommended foods
+
+Personalized health articles
+
+Backend with:
+
+User database (MongoDB preferred)
+
+Food logs
+
+Conditions + preferences mapping
+
+RESTful APIs: /api/register, /api/onboarding, /api/track-meal, /api/user-data
+
+✨ Design Guidelines
+Use modern UI libraries (e.g., TailwindCSS, ShadCN, Material UI)
+
+Ensure a clean, mobile-first responsive layout
+
+Use icons or illustrations to enhance user engagement
+
+Add progress bar during onboarding
+
+Use local storage to save in-progress onboarding data
