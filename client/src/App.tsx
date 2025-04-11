@@ -13,6 +13,7 @@ import GenderPage from "@/pages/onboarding/gender";
 import ConditionsPage from "@/pages/onboarding/conditions";
 import SummaryPage from "@/pages/onboarding/summary";
 import Dashboard from "@/pages/dashboard";
+import ProfilePage from "@/pages/profile-page";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/onboarding/conditions" component={() => <OnboardingLayout><ConditionsPage /></OnboardingLayout>} />
       <Route path="/onboarding/summary" component={() => <OnboardingLayout><SummaryPage /></OnboardingLayout>} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/profile" component={ProfilePage} />
       <Route component={NotFound} />
     </Switch>
   );

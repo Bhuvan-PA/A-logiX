@@ -134,7 +134,15 @@ export class MemStorage implements IStorage {
 
   async createFoodLog(insertLog: InsertFoodLog): Promise<FoodLog> {
     const id = this.logIdCounter++;
-    const log: FoodLog = { ...insertLog, id };
+    const log: FoodLog = { 
+      ...insertLog, 
+      id,
+      calories: insertLog.calories || null,
+      protein: insertLog.protein || null,
+      carbs: insertLog.carbs || null,
+      fat: insertLog.fat || null,
+      notes: insertLog.notes || null
+    };
     this.foodLogs.set(id, log);
     return log;
   }

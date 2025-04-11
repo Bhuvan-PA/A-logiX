@@ -167,6 +167,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Create a food log
+  app.post("/api/food-logs", async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      
+      // Validate required fields
+      if (!userId || !req.body.date || !req.body.mealType || !req.body.foodName) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+      
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      const foodLog = await storage.createFoodLog(req.body);
+      res.status(201).json(foodLog);
+    } catch (error) {
+      console.error("Error creating food log:", error);
+      res.status(500).json({ message: "Failed to create food log" });
+    }
+  });
+  
   // Get user data
   app.get("/api/user/:id", async (req, res) => {
     try {
