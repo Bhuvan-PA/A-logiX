@@ -8,7 +8,7 @@ import {
   insertFoodLogSchema
 } from "@shared/schema";
 import { z, ZodError } from "zod";
-import { generateNutritionInsight, analyzeMeal, generateMealPlan } from "./openai";
+import { generateNutritionInsight, analyzeMeal, generateMealPlan } from "./gemini";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // User registration
